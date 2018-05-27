@@ -1,0 +1,46 @@
+create project name
+
+select dataset
+
+DATA %>%
+
+80-10-10 validation > full dataset
+
+             data type > array
+
+             sentiment > numeric
+
+MODEL %>%
+
+                  Input (none, 499)
+                    
+                   Embedding (none, 100, 128)  > output dimension 128
+                                                input dimensions(5000), input length(100)
+                                                dropout 0.25
+                  
+                  Conv1D (none, 398,250)       no of filters 64  relu  filter length 5
+
+                  Maxpool1D (none, 250)        pool length 4  
+
+                 LSTM                           output 70  tanh
+
+                 Dense                          > output 1, sigmoid
+
+                 Output
+
+
+HYPER %>% epochs    2   > start training   (about 25minutes)
+                   
+                    30 > batch size
+                    
+                     loss > binary_crossenthophy
+
+                     optimizer > adam
+
+
+RESULTS
+
+
+INFERENCE          > compare results
+
+

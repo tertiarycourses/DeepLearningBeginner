@@ -1,0 +1,76 @@
+data:
+  dataset: {name: imdb, samples: 25000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Review:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Array
+    Sentiment:
+      options: {Normalization: false, Scaling: 1}
+      port: OutputPort0
+      shape: ''
+      type: Numeric
+  numPorts: 1
+  samples: {split: 4, test: 2500, training: 20000, validation: 2500}
+  shuffle: false
+model:
+  connections:
+  - {source: Dense_2, target: Output_1}
+  - {source: Dropout_2, target: Dense_2}
+  - {source: Convolution1D_1, target: GlobalAveragePooling1D_1}
+  - {source: Input_1, target: Embedding_1}
+  - {source: Dense_1, target: Dropout_2}
+  - {source: Embedding_1, target: Convolution1D_1}
+  - {source: GlobalAveragePooling1D_1, target: Dense_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 18
+    y: 7
+  - args: {dropout: '0.2', input_dim: '5000', input_length: '400', output_dim: '50'}
+    class: Embedding
+    name: Embedding_1
+    x: 8
+    y: 129
+  - args: {activation: relu, filter_length: '3', nb_filter: '250'}
+    class: Convolution1D
+    name: Convolution1D_1
+    x: 14.650000000000004
+    y: 287.87
+  - args: {p: '0.2'}
+    class: Dropout
+    name: Dropout_2
+    x: 416.31
+    y: 192.11
+  - args: {activation: relu, output_dim: '250'}
+    class: Dense
+    name: Dense_1
+    x: 418.97
+    y: 69.75
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 433.6
+    y: 479.39
+  - args: {activation: sigmoid, output_dim: '1'}
+    class: Dense
+    name: Dense_2
+    x: 420.30000000000007
+    y: 331.76
+  - args: {}
+    class: GlobalAveragePooling1D
+    name: GlobalAveragePooling1D_1
+    x: 18
+    y: 434
+params:
+  advance_params: true
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: binary_crossentropy
+  num_epoch: 2
+  optimizer: {name: Adam}
+project: IMDB using CNN (archive)

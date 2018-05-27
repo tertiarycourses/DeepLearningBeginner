@@ -1,0 +1,33 @@
+############### Challenge #############
+
+# perform a multi-layer perceptron (as above)
+# on the iris dataset 
+# choose the species column as your predictor variable
+
+
+########### Challenge ##################
+NN model
+
+
+#Create a 6 layers NN model for MNIST classification and #compare with 4 layers model
+#L1 = 1024
+#L2 = 512
+#L3 = 256
+#L4 = 128
+#L5 = 64
+#L6 = 32
+
+########## Challenge ###################
+
+CNN
+
+# Create a CNN for the CIFAR-10 dataset:
+# • conv layer - 32 filters,size=3,relu
+# • max pooling layer - size=2
+# • conv layer - 64 filters,size=3,relu
+# • max pooling layer - size=2
+# • conv layer - 128 filters,size=3,relu
+# dropout 0.5
+# flatten
+# • fc layer - 256 neurons, relu
+# • fc softmax output layer

@@ -1,0 +1,70 @@
+data:
+  dataset: {name: reuters, samples: 11228, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Class:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+    Topic:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Array
+  numPorts: 1
+  samples: {split: 4, test: 1122, training: 8982, validation: 1122}
+  shuffle: false
+model:
+  connections:
+  - {source: Embedding_1, target: Convolution1D_1}
+  - {source: Input_1, target: Embedding_1}
+  - {source: MaxPooling1D_1, target: LSTM_1}
+  - {source: Dense_1, target: Output_1}
+  - {source: LSTM_1, target: Dense_1}
+  - {source: Convolution1D_1, target: MaxPooling1D_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 16
+    y: 5
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 336
+    y: 540
+  - args: {dropout: '0.25', input_dim: '5000', input_length: '100', output_dim: '128'}
+    class: Embedding
+    name: Embedding_1
+    x: 30
+    y: 121
+  - args: {activation: relu, filter_length: '5', nb_filter: '64'}
+    class: Convolution1D
+    name: Convolution1D_1
+    x: 20
+    y: 223
+  - args: {pool_length: '4'}
+    class: MaxPooling1D
+    name: MaxPooling1D_1
+    x: 26
+    y: 328
+  - args: {output_dim: '70'}
+    class: LSTM
+    name: LSTM_1
+    x: 40
+    y: 433
+  - args: {activation: sigmoid, output_dim: '46'}
+    class: Dense
+    name: Dense_1
+    x: 50
+    y: 541
+params:
+  advance_params: true
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 2
+  optimizer: {name: Adadelta}
+project: Reuters using LSTM

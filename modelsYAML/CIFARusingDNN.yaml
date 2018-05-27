@@ -1,0 +1,77 @@
+data:
+  dataset: {name: cifar-10, samples: 60000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    img:
+      options: {Augmentation: false, Height: 28, Normalization: false, Resize: false,
+        Scaling: 1, Width: 28, height_shift_range: 0, horizontal_flip: false, pretrained: None,
+        rotation_range: 0, shear_range: 0, vertical_flip: false, width_shift_range: 0}
+      port: InputPort0
+      shape: ''
+      type: Image
+    label:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+  numPorts: 1
+  samples: {split: 4, test: 6000, training: 48000, validation: 6000}
+  shuffle: false
+model:
+  connections:
+  - {source: Dense_1, target: Dense_2}
+  - {source: Input_1, target: BatchNormalization_2}
+  - {source: Dense_2, target: Dropout_1}
+  - {source: BatchNormalization_2, target: Flatten_1}
+  - {source: Dense_3, target: Output_1}
+  - {source: Dropout_1, target: Dense_3}
+  - {source: Flatten_1, target: Dense_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 38
+    y: 9
+  - args: {activation: relu, output_dim: '512'}
+    class: Dense
+    name: Dense_1
+    x: 72
+    y: 398
+  - args: {activation: relu, output_dim: '512'}
+    class: Dense
+    name: Dense_2
+    x: 77
+    y: 500
+  - args: {p: '0.3'}
+    class: Dropout
+    name: Dropout_1
+    x: 468
+    y: 284
+  - args: {activation: softmax, output_dim: '10'}
+    class: Dense
+    name: Dense_3
+    x: 478
+    y: 383
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 479
+    y: 488
+  - args: {axis: '1'}
+    class: BatchNormalization
+    name: BatchNormalization_2
+    x: 40
+    y: 138
+  - args: {}
+    class: Flatten
+    name: Flatten_1
+    x: 58
+    y: 251
+params:
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 5
+  optimizer: {name: Adadelta}
+project: CIFAR using DNN

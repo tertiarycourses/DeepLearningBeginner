@@ -1,0 +1,120 @@
+data:
+  dataset: {name: cifar-10, samples: 60000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    img:
+      options: {Augmentation: false, Height: 28, Normalization: false, Resize: false,
+        Scaling: 1, Width: 28, height_shift_range: 0, horizontal_flip: false, pretrained: None,
+        rotation_range: 0, shear_range: 0, vertical_flip: false, width_shift_range: 0}
+      port: InputPort0
+      shape: ''
+      type: Image
+    label:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+  numPorts: 1
+  samples: {split: 4, test: 6000, training: 48000, validation: 6000}
+  shuffle: false
+model:
+  connections:
+  - {source: BatchNormalization_2, target: Convolution2D_8}
+  - {source: Convolution2D_9, target: MaxPooling2D_5}
+  - {source: Dropout_4, target: Convolution2D_10}
+  - {source: Convolution2D_11, target: MaxPooling2D_6}
+  - {source: Dropout_5, target: Flatten_2}
+  - {source: Flatten_2, target: Dense_3}
+  - {source: Dropout_6, target: Dense_4}
+  - {source: Dense_3, target: Dropout_6}
+  - {source: Dense_4, target: Output_2}
+  - {source: MaxPooling2D_6, target: Dropout_5}
+  - {source: Convolution2D_10, target: Convolution2D_11}
+  - {source: MaxPooling2D_5, target: Dropout_4}
+  - {source: Convolution2D_8, target: Convolution2D_9}
+  - {source: Input_2, target: BatchNormalization_2}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_2
+    x: 27
+    y: 26
+  - args: {axis: '1'}
+    class: BatchNormalization
+    name: BatchNormalization_2
+    x: 29
+    y: 136
+  - args: {activation: relu, border_mode: same, nb_col: '3', nb_filter: '32', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_8
+    x: 44
+    y: 233
+  - args: {activation: relu, nb_col: '3', nb_filter: '32', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_9
+    x: 41
+    y: 334
+  - args: {}
+    class: MaxPooling2D
+    name: MaxPooling2D_5
+    x: 52
+    y: 433
+  - args: {p: '0.25'}
+    class: Dropout
+    name: Dropout_4
+    x: 53
+    y: 536
+  - args: {activation: relu, border_mode: same, nb_col: '3', nb_filter: '64', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_10
+    x: 51
+    y: 627
+  - args: {activation: relu, nb_col: '3', nb_filter: '64', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_11
+    x: 351
+    y: 26
+  - args: {}
+    class: MaxPooling2D
+    name: MaxPooling2D_6
+    x: 345
+    y: 129
+  - args: {p: '0.25'}
+    class: Dropout
+    name: Dropout_5
+    x: 357
+    y: 231
+  - args: {}
+    class: Flatten
+    name: Flatten_2
+    x: 344
+    y: 325
+  - args: {activation: relu, output_dim: '512'}
+    class: Dense
+    name: Dense_3
+    x: 343
+    y: 429
+  - args: {p: '0.5'}
+    class: Dropout
+    name: Dropout_6
+    x: 346
+    y: 535
+  - args: {activation: softmax, output_dim: '10'}
+    class: Dense
+    name: Dense_4
+    x: 357
+    y: 635
+  - args: {}
+    class: Output
+    name: Output_2
+    x: 636
+    y: 637
+params:
+  advance_params: true
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 2
+  optimizer: {decay: 1e-6, momentum: '0.9', name: SGD, nesterov: true}
+project: CIFAR using CNN

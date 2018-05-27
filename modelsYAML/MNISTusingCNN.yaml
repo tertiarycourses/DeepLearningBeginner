@@ -1,0 +1,90 @@
+data:
+  dataset: {name: mnist, samples: 70000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Digit Label:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+    Image:
+      options: {Augmentation: false, Height: 28, Normalization: false, Resize: false,
+        Scaling: 1, Width: 28, height_shift_range: 0, horizontal_flip: false, pretrained: None,
+        rotation_range: 0, shear_range: 0, vertical_flip: false, width_shift_range: 0}
+      port: InputPort0
+      shape: ''
+      type: Image
+  numPorts: 1
+  samples: {split: 4, test: 7000, training: 56000, validation: 7000}
+  shuffle: false
+model:
+  connections:
+  - {source: Flatten_1, target: Dense_1}
+  - {source: Convolution2D_1, target: Convolution2D_2}
+  - {source: Input_1, target: Convolution2D_1}
+  - {source: Dropout_1, target: Flatten_1}
+  - {source: Dropout_2, target: Dense_2}
+  - {source: Convolution2D_2, target: MaxPooling2D_1}
+  - {source: Dense_1, target: Dropout_2}
+  - {source: MaxPooling2D_1, target: Dropout_1}
+  - {source: Dense_2, target: Output_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 40
+    y: 6
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 358
+    y: 440
+  - args: {activation: relu, nb_col: '3', nb_filter: '32', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_1
+    x: 50
+    y: 133
+  - args: {activation: relu, nb_col: '3', nb_filter: '32', nb_row: '3'}
+    class: Convolution2D
+    name: Convolution2D_2
+    x: 44
+    y: 234
+  - args: {}
+    class: MaxPooling2D
+    name: MaxPooling2D_1
+    x: 48
+    y: 343
+  - args: {p: '0.25'}
+    class: Dropout
+    name: Dropout_1
+    x: 56
+    y: 449
+  - args: {}
+    class: Flatten
+    name: Flatten_1
+    x: 351
+    y: 2
+  - args: {activation: relu, output_dim: '128'}
+    class: Dense
+    name: Dense_1
+    x: 351
+    y: 110
+  - args: {p: '0.5'}
+    class: Dropout
+    name: Dropout_2
+    x: 359
+    y: 211
+  - args: {activation: softmax, output_dim: '10'}
+    class: Dense
+    name: Dense_2
+    x: 355
+    y: 311
+params:
+  advance_params: true
+  batch_size: 128
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 12
+  optimizer: {name: Adadelta}
+project: MNIST using CNN

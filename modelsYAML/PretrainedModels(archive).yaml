@@ -1,0 +1,71 @@
+data:
+  dataset: {name: transfer, samples: 6, type: private}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Image:
+      options: {Augmentation: false, Height: 28, Normalization: false, Resize: false,
+        Scaling: 1, Width: 28, height_shift_range: 0, horizontal_flip: false, pretrained: None,
+        rotation_range: 0, shear_range: 0, vertical_flip: false, width_shift_range: 0}
+      port: InputPort0
+      shape: ''
+      type: Image
+    Name:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+  numPorts: 1
+  samples: {split: 0, test: 0, training: 6, validation: 0}
+  shuffle: false
+model:
+  connections:
+  - {source: VGG19_1, target: Flatten_1}
+  - {source: Dense_2, target: Output_1}
+  - {source: Input_1, target: VGG19_1}
+  - {source: Dense_1, target: Dropout_1}
+  - {source: Dropout_1, target: Dense_2}
+  - {source: Flatten_1, target: Dense_1}
+  layers:
+  - args: {include_top: false, trainable: 0}
+    class: VGG19
+    name: VGG19_1
+    x: 193
+    y: 191
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 183
+    y: 61
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 520
+    y: 681
+  - args: {}
+    class: Flatten
+    name: Flatten_1
+    x: 203
+    y: 313
+  - args: {activation: relu, output_dim: '100'}
+    class: Dense
+    name: Dense_1
+    x: 191
+    y: 437
+  - args: {p: '0.25'}
+    class: Dropout
+    name: Dropout_1
+    x: 224
+    y: 562
+  - args: {activation: softmax, output_dim: '6'}
+    class: Dense
+    name: Dense_2
+    x: 189
+    y: 671
+params:
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 25
+  optimizer: {name: Adadelta}
+project: Pretrained Models (archive)

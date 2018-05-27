@@ -1,0 +1,36 @@
+create project name
+
+select dataset
+
+DATA %>%
+
+80-10-10 validation > full dataset
+
+MODEL %>%
+
+                  Input (none, 3, 32, 32)
+
+                  batch Normalization(none, 3, 32, 32) Axis 1
+
+                 Fatten (none, 3072)                   
+  
+                 Dense  > none, 512, relu
+ 
+                 Dense   > none, 512, relu
+
+                 Dropout > 0.3            
+
+                 Dense  > none, 10, softmax
+
+                 Output
+
+
+HYPER %>% epochs    2   > start training
+                        (takes 5 minutes)
+
+RESULTS
+
+
+INFERENCE          > compare results
+
+

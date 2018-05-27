@@ -1,0 +1,65 @@
+data:
+  dataset: {name: mnist, samples: 70000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Digit Label:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+    Image:
+      options: {Augmentation: false, Height: 28, Normalization: false, Resize: false,
+        Scaling: 1, Width: 28, height_shift_range: 0, horizontal_flip: false, pretrained: None,
+        rotation_range: 0, shear_range: 0, vertical_flip: false, width_shift_range: 0}
+      port: InputPort0
+      shape: ''
+      type: Image
+  numPorts: 1
+  samples: {split: 4, test: 7000, training: 56000, validation: 7000}
+  shuffle: false
+model:
+  connections:
+  - {source: Input_1, target: BatchNormalization_1}
+  - {source: BatchNormalization_1, target: Reshape_1}
+  - {source: Reshape_1, target: SimpleRNN_1}
+  - {source: SimpleRNN_1, target: Dense_1}
+  - {source: Dense_1, target: Output_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 30
+    y: 18
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 48
+    y: 609
+  - args: {}
+    class: BatchNormalization
+    name: BatchNormalization_1
+    x: 40
+    y: 149
+  - args: {target_shape: '(28,28)'}
+    class: Reshape
+    name: Reshape_1
+    x: 50
+    y: 254
+  - args: {activation: relu, output_dim: '100'}
+    class: SimpleRNN
+    name: SimpleRNN_1
+    x: 47
+    y: 359
+  - args: {activation: softmax, output_dim: '10'}
+    class: Dense
+    name: Dense_1
+    x: 57
+    y: 493
+params:
+  batch_size: 32
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 2
+  optimizer: {name: Adadelta}
+project: MNIST using IRNN (archive)

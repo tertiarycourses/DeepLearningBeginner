@@ -1,0 +1,42 @@
+create project name
+
+select dataset
+
+DATA %>%
+
+80-10-10 validation > full dataset
+
+MODEL %>%
+
+                  Input (none, 1, 28, 28)
+
+                  Conv2D (none, 32, 26,26)
+
+                  Conv2D (none, 32, 24, 24)
+
+                  Maxpool2D (none, 32, 12 ,12)
+
+                  Dropout > 0.3
+                  
+                  Fatten (none, 4608)                   
+  
+                 Dense  > none, 128, relu
+
+                 Dropout > 0.3
+
+                 Dense  > none, 10, softmax
+
+                 Output
+
+
+HYPER %>% epochs    5   > start training
+
+                    128 > batch size
+
+
+RESULTS
+
+
+INFERENCE          > compare results
+
+

@@ -1,0 +1,73 @@
+data:
+  dataset: {name: iris, samples: 150, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Petal.Length:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Numeric
+    Petal.Width:
+      options: {Normalization: false, Scaling: 1}
+      port: OutputPort0
+      shape: ''
+      type: Numeric
+    Sepal.Length:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Numeric
+    Sepal.Width:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Numeric
+    Species:
+      options: {}
+      port: ''
+      shape: ''
+      type: Categorical
+  numPorts: 1
+  samples: {split: 1, test: 0, training: 120, validation: 30}
+  shuffle: false
+model:
+  connections:
+  - {source: Input_1, target: Dense_1}
+  - {source: Dropout_1, target: Dense_2}
+  - {source: Dense_1, target: Dropout_1}
+  - {source: Dense_2, target: Output_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 5
+    y: 13
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 64
+    y: 473
+  - args: {activation: relu, output_dim: '100'}
+    class: Dense
+    name: Dense_1
+    x: 25
+    y: 148
+  - args: {p: '0.3'}
+    class: Dropout
+    name: Dropout_1
+    x: 30
+    y: 244
+  - args: {activation: linear, output_dim: '1'}
+    class: Dense
+    name: Dense_2
+    x: 43
+    y: 347
+params:
+  advance_params: true
+  batch_size: 10
+  is_custom_loss: false
+  loss_func: mean_squared_error
+  num_epoch: 100
+  optimizer: {name: Adam}
+project: Iris using DNN (archive)

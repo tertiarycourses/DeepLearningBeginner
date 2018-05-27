@@ -1,0 +1,58 @@
+create project name
+
+select dataset
+
+DATA %>%
+
+80-10-10 validation > full dataset
+
+MODEL %>%
+
+                  Input (none, 3, 32, 32)
+
+                  batch Normalization(none, 3, 32, 32) Axis 1
+
+                  Conv2D (none, 32, 32, 32)
+                  (filters 32, col 3, rows 3 relu bordermode:same)  
+               
+                  Conv2D (none, 32, 30, 30)
+                  (filters 32, col 2, rows 3 relu bordermode:valid)  
+
+                  Maxpool2D (none, 32, 15 ,15)
+
+                  Dropout (0.25)
+                  
+                  Conv2D (none, 64, 15, 15)
+                  (filters 64, col 3, rows 3 relu bordermode:same)  
+              
+                  Conv2D (none, 64, 13, 13)
+                   (filters 64, col 3, rows 3 relu bordermode:valid) 
+
+                  Maxpool2D (none, 64, 6 ,6)
+
+                  Dropout (0.25)
+
+                  Fatten (none, 2304)                   
+  
+                 Dense  > none, 512, relu
+
+                 Dropout > 0.3            
+
+                 Dense  > none, 10, softmax
+
+                 Output
+
+
+HYPER %>% epochs    2   > start training   (this will take 35mins)
+                    loss > categoricac_crossentrophy
+                    32 > batch size
+                    optimizer:SDG
+                    decay: 1e-6
+                    nestrov > true
+                    momentum > 0.9
+RESULTS
+
+
+INFERENCE          > compare results
+
+

@@ -1,0 +1,70 @@
+data:
+  dataset: {name: imdb, samples: 25000, type: public}
+  datasetLoadOption: full
+  kfold: 1
+  mapping:
+    Review:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Array
+    Sentiment:
+      options: {Normalization: false, Scaling: 1}
+      port: OutputPort0
+      shape: ''
+      type: Numeric
+  numPorts: 1
+  samples: {split: 4, test: 2500, training: 20000, validation: 2500}
+  shuffle: false
+model:
+  connections:
+  - {source: Dense_1, target: Output_1}
+  - {source: LSTM_1, target: Dense_1}
+  - {source: MaxPooling1D_1, target: LSTM_1}
+  - {source: Convolution1D_1, target: MaxPooling1D_1}
+  - {source: Embedding_1, target: Convolution1D_1}
+  - {source: Input_1, target: Embedding_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 21
+    y: 23
+  - args: {dropout: '0.25', input_dim: '5000', input_length: '100', output_dim: '128'}
+    class: Embedding
+    name: Embedding_1
+    x: 32
+    y: 128
+  - args: {activation: relu, filter_length: '5', nb_filter: '64'}
+    class: Convolution1D
+    name: Convolution1D_1
+    x: 10
+    y: 252
+  - args: {pool_length: '4'}
+    class: MaxPooling1D
+    name: MaxPooling1D_1
+    x: 9
+    y: 369
+  - args: {output_dim: '70'}
+    class: LSTM
+    name: LSTM_1
+    x: 18
+    y: 466
+  - args: {activation: sigmoid, output_dim: '1'}
+    class: Dense
+    name: Dense_1
+    x: 29
+    y: 568
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 305
+    y: 585
+params:
+  advance_params: true
+  batch_size: 30
+  is_custom_loss: false
+  loss_func: binary_crossentropy
+  num_epoch: 2
+  optimizer: {name: Adam}
+project: IMDB using LSTM
