@@ -7,6 +7,8 @@ The course outline can be found in
 
 https://www.tertiarycourses.com.sg/deep-learning-for-beginners.html
 
+https://www.tertiarycourses.com.my/deep-learning-for-beginners-malaysia.html
+
 <p><strong>Module 1 Overview of Machine Learning and Deep Learning</strong></p>
 <ul>
 <li>What is Machine Leanring?</li>
